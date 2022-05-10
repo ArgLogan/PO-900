@@ -1,0 +1,132 @@
+[Root]
+Most Recent Package=PO900IDE
+
+
+[Package|PO900IDE|EditorPO900]
+Icon1=EditorPO900.exe
+Title1=EditorPO900
+StartIn1=$(AppPath)
+Key1=Icon1
+
+[Package|PO900IDE|Root]
+SubWizProgID=PDWizard.SetupPkgSubWiz
+BuildFolder=D:\john\proyecto\temp supourt
+
+[Package|PO900IDE|Configure DAO ISAMs]
+Applicable=No
+
+[Package|PO900IDE|Configure DAO ODBC]
+JetWorkspace=
+ODBCDirect=
+
+[Package|PO900IDE|Files Found]
+
+[Package|PO900IDE|Files Released]
+
+[Package|PO900IDE|Missing Dependency Information]
+
+[Package|PO900IDE|Out-of-Date Dependency Information]
+C:\WINDOWS\SYSTEM\COMCT332.OCX=
+
+[Package|PO900IDE|Files Added]
+
+[Package|PO900IDE|Files Removed]
+
+[Package|PO900IDE|Files In Project]
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=Yes
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=Yes
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=Yes
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=Yes
+C:\WINDOWS\system32\msvbvm60.dll=Yes
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEAUT32.DLL=Yes
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEPRO32.DLL=Yes
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\ASYCFILT.DLL=Yes
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\STDOLE2.TLB=Yes
+C:\WINDOWS\system32\MSCOMCTL.OCX=Yes
+C:\WINDOWS\system32\COMDLG32.OCX=Yes
+C:\WINDOWS\system32\COMCT232.OCX=Yes
+C:\WINDOWS\system32\MSSTDFMT.DLL=Yes
+C:\WINDOWS\system32\VB6STKIT.DLL=Yes
+D:\john\proyecto\Editor PO900 Mix\Execs\EditorPO900.exe=Yes
+C:\WINDOWS\system32\TABCTL32.OCX=Yes
+
+[Package|PO900IDE|Configure Registry Files]
+Applicable=No
+
+[Package|PO900IDE|Configure Remote Servers]
+Applicable=No
+
+[Package|PO900IDE|Install Locations]
+V:\Fede.JOB\Job\Visual\VB\Editor PO900 Mix\Execs\EditorPO900.exe=$(AppPath)
+C:\WINDOWS\SYSTEM\MSVBVM60.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\SYSTEM\OLEAUT32.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\SYSTEM\OLEPRO32.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\SYSTEM\ASYCFILT.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\SYSTEM\STDOLE2.TLB=$(WinSysPathSysFile)
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\SYSTEM\VB6ES.DLL=$(WinSysPath)
+C:\WINDOWS\SYSTEM\TABCTL32.OCX=$(WinSysPath)
+C:\WINDOWS\SYSTEM\TABCTES.DLL=$(WinSysPath)
+C:\WINDOWS\SYSTEM\MSCOMCTL.OCX=$(WinSysPath)
+C:\WINDOWS\SYSTEM\MSCMCES.DLL=$(WinSysPath)
+C:\WINDOWS\SYSTEM\COMCT332.OCX=$(WinSysPath)
+C:\WINDOWS\SYSTEM\CMCT3ES.DLL=$(WinSysPath)
+C:\WINDOWS\SYSTEM\MSCOMCT2.OCX=$(WinSysPath)
+C:\WINDOWS\SYSTEM\MSCC2ES.DLL=$(WinSysPath)
+C:\WINDOWS\SYSTEM\COMDLG32.OCX=$(WinSysPath)
+C:\WINDOWS\SYSTEM\CMDLGES.DLL=$(WinSysPath)
+C:\WINDOWS\SYSTEM\COMCT232.OCX=$(WinSysPath)
+C:\WINDOWS\SYSTEM\CMCT2ES.DLL=$(WinSysPath)
+C:\WINDOWS\SYSTEM\COMCTL32.OCX=$(WinSysPath)
+C:\WINDOWS\SYSTEM\CMCTLES.DLL=$(WinSysPath)
+C:\WINDOWS\SYSTEM\MSSTDFMT.DLL=$(WinSysPath)
+C:\WINDOWS\SYSTEM\STDFTES.DLL=$(WinSysPath)
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=$(AppPath)
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=$(WinPath)
+C:\WINDOWS\SYSTEM\VB6STKIT.DLL=$(WinSysPathSysFile)
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=$(WinPath)
+D:\john\proyectos\Editor PO900 Mix\EditorPO900.exe=$(AppPath)
+C:\WINDOWS\system32\msvbvm60.dll=$(WinSysPathSysFile)
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEAUT32.DLL=$(WinSysPathSysFile)
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEPRO32.DLL=$(WinSysPathSysFile)
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\ASYCFILT.DLL=$(WinSysPathSysFile)
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\STDOLE2.TLB=$(WinSysPathSysFile)
+C:\WINDOWS\system32\MSCOMCTL.OCX=$(WinSysPath)
+C:\WINDOWS\system32\COMDLG32.OCX=$(WinSysPath)
+C:\WINDOWS\system32\COMCT232.OCX=$(WinSysPath)
+C:\WINDOWS\system32\MSSTDFMT.DLL=$(WinSysPath)
+C:\WINDOWS\system32\VB6STKIT.DLL=$(WinSysPathSysFile)
+D:\john\proyecto\Editor PO900 Mix\Execs\EditorPO900.exe=$(AppPath)
+C:\WINDOWS\system32\TABCTL32.OCX=$(WinSysPath)
+
+[Package|PO900IDE|Configure Shared Files]
+Applicable=Yes
+V:\Fede.JOB\Job\Visual\VB\Editor PO900 Mix\Execs\EditorPO900.exe=No
+D:\john\proyectos\Editor PO900 Mix\EditorPO900.exe=No
+D:\john\proyecto\Editor PO900 Mix\Execs\EditorPO900.exe=No
+
+[Package|PO900IDE|Distribution]
+Type=single
+Size=
+Title=Editor
+
+[Package|PO900IDE|IconGroups]
+Group0=Editor
+PrivateGroup0=-1
+Parent0=$(Programs)
+
+[Package|PO900IDE|Editor]
+Icon1=EditorPO900.exe
+Title1=Editor
+StartIn1=$(AppPath)
+Key1=Icon1
+
+[Package|PO900IDE|Package]
+PackageFolder=D:\john\proyecto\temp supourt
+ProjectFolder=D:\john\proyecto\Editor PO900 Mix
+ServerSideCab=
+File1=D:\john\proyecto\temp supourt\setup.exe
+File2=D:\john\proyecto\temp supourt\Setup.Lst
+File3=D:\john\proyecto\temp supourt\EditorPO900.CAB
+Handler1=PDWizard.FolderDplySubWiz
+Handler2=PDWizard.WebPostDplySubWiz

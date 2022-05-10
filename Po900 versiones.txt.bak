@@ -1,0 +1,196 @@
+***********************************************************************************************************************************************************
+Versión 1.0.31		No compilada aun 07-06-2005
+- se modifico el path del serch_lra para que lo busque en la carpeta plugins.
+- Se puso como path default del compilador la carpeta plugins 
+- 
+
+***********************************************************************************************************************************************************
+Versión 1.0.30		07-06-2005
+- se modifico ventana v_prop para agregar la configuración de comunicación.
+- Se agrego escritura de valores de comunicación en write globales.
+- Se agrego lectura de valores de comunicación en read globales.
+- Se agregagon nuevas propiedades a la clase globales, para que soporte la configuración, de las opciones de comunicación.
+- Se genero instalador PO900V1030.exe
+
+***********************************************************************************************************************************************************
+Versión 1.0.29		06-06-2005
+- Se elimino la posibilidad de llamar al simulador dentro del programa.
+- Se modifico el control de usuario, lista_prop, para que valide el uso del menos y la coma.
+- Se modifico la calse del campo numérico para que valide el maximo y minimo segun cambie la cantidad de decimales y la cantidad de enteros
+
+***********************************************************************************************************************************************************
+Versión 1.0.28		03/06/2005
+- Se agrego en el menu Herramientas la opcion "lista de Address". esta llama al programa lista_lra.exe
+- Valida si el archivo lista_lra.exe existe al momento de hacer click en herramientas.
+- Salva el proyecto antes de llamar al programa lista_lra.
+- Valida si el archivo del compilador existe al momento de hacer click en herramientas. 
+- Se modifico v_prop para que actualice el path del compilador cuando se cambia.
+- Se genero instalador PO900V1028.exe
+
+***********************************************************************************************************************************************************
+Versión 1.0.27		03/06/2005
+- Se elimino el FOR de descarga de los LB_CONTROL para no generar error de indexamiento.
+- Modificado la asignacion de enteros y decimales para el campo numerico.
+
+***********************************************************************************************************************************************************
+Versión 1.0.26		03/06/2005
+- Se corrigio el problema del "error 340" por la perdida del los lb_control cuando actualizava el foco de
+  las propiedades de campo, al momento de cerrar directamente una pantalla.
+
+**********************************************************************************************************************************************************
+Versión 1.0.25		02/06/2005
+- Se modifico la la ventana pantalla para que el label indicador del nombre de la pantalla sea mas grande y que al hacer doble click sobre el llame a las
+  propiedades
+- Se corrigio bug al mostrar el número de pantalla luego de cambiar el nombre de la misma.
+- Se modifico clone en el campo númerico para que respete la posicion de los campos.
+
+***********************************************************************************************************************************************************
+Versión 1.0.24		02/06/2005
+- Se arreglo el tema de la sobrescritura de las pantalla
+- Se modifico Splash y ventana de acerca de.
+
+***********************************************************************************************************************************************************
+Versión 1.0.23		31/05/2005
+- Se agrego a la ventana propiedades del proyecto, la posibilidad de elegir el path del compilador.
+- Se agrego una constante con el nombre del compilador. Valida contra esta constante.
+- Se agrego limite superior e inferior a la dirección de "LRA" tanto para bitset como para LRA.
+- Se agregaron cuantro propiedades a la ventana v_indice.
+- Se genereo nuevo instalador PO900V1023.exe
+
+***********************************************************************************************************************************************************
+Version 1.0.22		30/05/2005
+- Modificado para tomar gobales y locales como corresponde.
+- Se agregaron propiedades booleanes en la clase pantalla para saber si las propiedades son locales o globales
+- Se modifico Write y read para soportar el cambio anteriro.
+- Se modifico ventana de propiedades para que las propiedades numericas pudiran tener signo.
+- Se corrigio ventana de globales -locales porque no mostrab los jump cargados.
+- Se reordenaron las propiedades.
+- Se agrego control de minimizar a las pantallas
+- Se cambio el icono de guardar.
+- Se arreglo conversion de formato en las propiedades (str a cstr)
+- Se corrigio el read del campo Numérico. leia mal la ganacia.
+- Se elimino el navegador oculto y todas sus llamadas.
+- Se toco mucho en esta versión, puede que falte anotar modificaciones.
+
+***********************************************************************************************************************************************************
+Versión 1.0.21		26-05-205
+- Se corrigio bug de edicion en la pantalla de globales\locales, con respecto a la edicion del bit.
+- Se corrigio Problema de ventana emergente V_LRA. Aparecia cuando se hacia click y no estab el op_bit en verdadero.
+
+***********************************************************************************************************************************************************
+Versión 1.0.20		26-05-2005
+- Se corrigio error de escritura en bitset globales, idem error de escrituda en globales(anteriormente solucionado)
+- Se agrego item PANTALLA_PRINCIPAL a la venteana de Globales/locales
+- Se agrego propiedad Pant_Principal a la clase Globales.
+- El programa permitia que se cargue un JUMP mayor de 254, pero la clase no admite mas de 255 por lo cual explotaba, solucionado.
+- Se agrego En la seccion [VARIABLES DEFAULT] del ini globales:  PANTALLA_PRINCIPAL. (Write Globales)
+- Se modifico modifico la pantalla de propiedades, para que actulice el texto a mostrar cuando se cambia de modo en un campo NUMÉRICO.
+- Se modifico la ventana Globales/Locales para que tenga una nueva forma de manejar el bitset y el Jump.
+
+***********************************************************************************************************************************************************
+Versión 1.0.19		24-05-2005
+- Se modifico la ventana de variables locales/globales para que no permita que una tecla tenga bit set y jump. (El Jump manda)
+
+***********************************************************************************************************************************************************
+Version 1.0.18		24-05-2005
+- Modifico el sistema de Foco de campos para mantener señalado el campo con foco en propiedades.
+- Corrigió el largo bits para que tome de 1 a 16 y verifique contra bit de inicio.
+- Se corrigio ventana de propiedades para salvar el valor modificado en caso de que entre de nuevo el proseso cargar.
+
+***********************************************************************************************************************************************************
+Versión 1.0.17		24-05-2005
+- Se corrigio GAIN_EXP. Estaban ON/OFF invertidos.
+- Se modificaron las propiedades Para que los campos booleanos tomen directamente un valor booleano y no los convierta vb, tenia problemas segun el idioma.
+- Se modifico lectura de campo Numérico. Lee primero el modo y despues los decimales y el largo, porque no respetaba el largo en el modo BIN.
+- Se agrego Modo BIN(binario) y HEX(hexadecimal en las propiedades)
+- Se modifico el Clone del campo numérico porque no respetaba el largo en tipo binario.
+
+***********************************************************************************************************************************************************
+Versión 1.0.16		17-05-2005
+- Se corrigio error de lectura desde el "INI". No leeia los campos Trigger_lra en MTD, NUM y ALFANUM
+- Muestra si tiene o no un bit_set en la ventana de Locales/Globales.
+- Cambio la leyenda "BSC" por "BIT" en la ventana de locales/globales
+- Se agrego en el "INI" de globales la llabe de compilacion fija, [COMPILADOR] POSX-1=ON.
+- Se modifico la ventana de Globales para que llame a la ventana V._LRA
+
+***********************************************************************************************************************************************************
+Versión 1.0.15		11-05-2005
+- Se agrego Key_Item REM, lo usamamos para el nombre del campo y solo se escribe cuando es distinto de ""
+- Se corrigio bug del bit set en las teclas F3 y F4. F3 no tenia referencia y el boton de F4 cargaba el bit set de F3.
+- El programa no intenta borrar las propiedades si la ventana propiedades esta cerrada.
+- Solo muestra la Opción "OFF" en bitset cuando es tencla de función
+- Se corrigio bug de escritura de INI FILE para el bit set de las teclas F1 al F4 (no escribia el archivo)
+
+***********************************************************************************************************************************************************
+Versión 1.0.14		10-05-2005
+- Se modifico la ventana de propiedades para que soporte barra de scroll, la barra aparece cuando hay propiedades que no se puenden mostrar por tamaño.
+- Se modifico, read, write globales, para leer y escribir en los inis, los bitset de las teclas de función.
+- Se modifico la calse pantalla y la calse Globales, para que soporte bitset en las teclas de función.
+- Se modifico ventana de propiedades, locales, globales, para que soporte bitset en las teclas de funcion.
+
+***********************************************************************************************************************************************************
+Versión 1.0.13		06-05-2005
+- Se agrego propiedad "Tigger Enable"(On/Off) Y se cambio el nombre de la propiedad "Trigger" por "Trigger LRA". La propiedad "Trigger enable" solo puede ser
+True si la pripiedade "Editable" es true.
+- Se agrego Trigger a los campos Alfanum y MTD, se comporta igual que en el Numérico.
+- Se modifico Lectura, Escritura y Propiedades Para que soporte las nuevas caracteristicas del Trigger.
+
+***********************************************************************************************************************************************************
+Versión 1.0.12		06-05-2005
+- Se agrego Trigger a campo Numérico. Cuando es editable =True y el trigger se deja en ""  escribe en el ini "TRIGGER =OFF" si editable esta en false, 
+no escribe el ini.
+- Se modifico Lectura y escritura de ini para soportar trigger.
+- Se modifico Calse de campo Numérico para soportar Trigger
+- Se modifico Pantalla propiedades del campo numérico para que soporte el trigger, sepuede booror el trigger.
+- Se agrego limite de campos por pantalle en 16, afecta a campos nuevos y copiados, ya sea por arrastre o por macro.
+- Se modifico la panatalla V_LRA para que soporte el trigger.
+- Se genero instalador Nuevo.
+
+***********************************************************************************************************************************************************
+Versión 1.0.11		29-04-2005
+- Se corrigio error largo en campo numerico al leer desde el archivo, cuando no tenia decimales y el valor era menor a 4.
+- Se Agrego teiempo de espera en navegador y se corrigio error de loop infinito por eventos recursivos.
+- Se corrigio error al presionar escape en el navegador, se abortaba, porque no borraba antes de recargar.
+- Se corrigio error de tiemp en salto de pantalla.
+
+***********************************************************************************************************************************************************
+Versión 1.0.10		29-04-2005
+- Se corrigio el largo del campo numerico al copiar (no respetaba largo)
+- Se Corrigio font, por una nueva versión
+- Se corrigio error en el campo propiedades con respecto a los limites del campo numerico.
+- Se corrigio error de Cortar y pegar una pantalla, cuando la panatalla estaba abierta.
+- Se agrego timer_nav para que desaparezca el menu navegador despues de un minito, aparece cuando se presiona Ctrl + Alt + n en la pantalla de acerca de.
+
+***********************************************************************************************************************************************************
+Versión 1.0.9		27-04-2005
+-Se corrigio mensaje al mover un campo sobre otro, decia "contro" ahora dice "control"
+-Se Corrigio el numero hexadecimal de las pantallas, mostraba "00" en casos como "1A".
+-Se corrigio el problema del color del campo al modificar una propiedad.
+-Se agrego en la ventana de propiedades de la pantalla, que al presionar "enter" en los campos de nombre y teclas de jump toma\
+ el foco el boton cerrar.
+-Se corrigio el error de posicionamisnto de los campos al copiar una pantalla.
+-Ahora cuando se presiona el boton guardar y hay pantallas abiertas, pregunta y luego cierra las pantallas, despues guarda los cambios.
+
+***********************************************************************************************************************************************************
+Versión 1.0.8		27-04-2005
+-Se modifico doble clic para salir de la pantalla.
+-Se arreglo tamaño de la pantalla al presionar el boton teclado.
+-Se corrigio error de espacios en la ventana LRA
+-Se modifico aspecto de la pantalla LRA
+
+**********************************************************************************************************************************************************
+Versión 1.0.7		26-04-2005
+-No guarda el cambio de los valores de las propiedades si el valor que se ingresa es nulo.(no deja en blanco como la 1.0.7)
+-Se modifico la pantalla del LRA
+
+*********************************************************************************************************************************************************
+Versión 1.0.6		26-04-2005
+-Se agrego propiedad LRA en el campo alfanumerico.
+-Se corrigio foco al crear un nuevo campo. (revisar)
+-Se deshabilitan los botones "simulador" y "Compilador" de la toolbar si no encuentra el path.
+-No guerda el cambio de los valores de las propiedades si el valor que se ingresa es nulo. (Falta hacer ajustes)
+-Se agrego la versión de programa al titulo de la ventana principal.
+-Se agrego ventana para generar el LRA, de una forma validada.
+-Se corrigio la numeracion de pantalla de Hexadecimal a decimal
+
+***********************************************************************************************************************************************************

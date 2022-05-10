@@ -1,0 +1,21 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=PO900.chm
+Contents file=Table of Contents.hhc
+Default topic=help.htm
+Display compile progress=No
+Index file=Index.hhk
+Language=0x2c0a Español (Argentina)
+
+
+[FILES]
+help.htm
+
+[ALIAS]
+1000=hhw_vb.htm#Pantallas
+
+[MAP]
+#include heder.h
+
+[INFOTYPES]
+

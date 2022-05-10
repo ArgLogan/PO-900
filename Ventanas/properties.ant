@@ -1,0 +1,662 @@
+VERSION 5.00
+Begin VB.Form properties 
+   BackColor       =   &H80000009&
+   BorderStyle     =   1  'Fixed Single
+   Caption         =   "propiedades"
+   ClientHeight    =   6615
+   ClientLeft      =   45
+   ClientTop       =   330
+   ClientWidth     =   2730
+   LinkTopic       =   "Form1"
+   MaxButton       =   0   'False
+   MDIChild        =   -1  'True
+   MinButton       =   0   'False
+   ScaleHeight     =   6615
+   ScaleWidth      =   2730
+   Begin EDITPO900.campo_prop lista_prop 
+      Height          =   255
+      Index           =   0
+      Left            =   120
+      TabIndex        =   0
+      Top             =   6840
+      Width           =   2535
+      _ExtentX        =   4471
+      _ExtentY        =   450
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin VB.Line Line4 
+      BorderWidth     =   4
+      X1              =   0
+      X2              =   2760
+      Y1              =   6600
+      Y2              =   6600
+   End
+   Begin VB.Line Line3 
+      BorderWidth     =   4
+      X1              =   0
+      X2              =   2760
+      Y1              =   30
+      Y2              =   30
+   End
+   Begin VB.Line Line2 
+      BorderWidth     =   5
+      X1              =   2700
+      X2              =   2700
+      Y1              =   0
+      Y2              =   6600
+   End
+   Begin VB.Line Line1 
+      BorderWidth     =   6
+      X1              =   0
+      X2              =   0
+      Y1              =   0
+      Y2              =   6600
+   End
+End
+Attribute VB_Name = "properties"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+
+Option Explicit
+Private indice_control As Integer
+Dim ptr_control As lb_cont
+Dim ventana_actual As pantalla
+Dim foco As Byte
+Public LRA_compuestas As String
+
+Private Sub lista_prop_Change(Index As Integer)
+    flag_cambio = cambio
+End Sub
+
+Private Sub lista_prop_Click(Index As Integer)
+    Dim aux As String
+    Dim aux2 As String
+    lista_prop(Index).SetFocus
+'************************************* SOLO PARA CAMPO MULTITEXT DIGITAL *************************************
+    aux = Mid(lista_prop(Index).Caption, 1, 5)
+    aux2 = ventana_actual.lb_control(indice_control).cl_campo.tipo_campo
+    If aux2 = "MTDIGITAL" And aux = "Texto" Then
+        aux = Mid(lista_prop(Index).Caption, 6, 2)
+        ventana_actual.lb_control(indice_control).Caption = ventana_actual.lb_control(indice_control).cl_campo.texto(Val(aux) - 1)
+        ventana_actual.lb_control(indice_control).Width = (ventana_actual.lb_control(indice_control).cl_campo.largo)
+    End If
+End Sub
+
+Private Sub lista_prop_DblClick(Index As Integer)
+    flag_cambio = sin_cambio
+    LRA_compuestas = lista_prop(Index).Text
+    If lista_prop(Index).Caption = "LRA" Then
+        V_LRA.Show (1)
+        lista_prop(Index).Text = LRA_compuestas
+    End If
+    lista_prop(Index).SetFocus
+End Sub
+
+Private Sub lista_prop_DownClick(Index As Integer)
+    If lista_prop(Index).Caption = "X" Or lista_prop(Index).Caption = "Y" Or lista_prop(Index).Caption = "Items" Then
+        lista_prop(Index).Text = Str(Val(lista_prop(Index).Text) - 1)
+        If Val(lista_prop(Index).Text) < 1 Then lista_prop(Index).Text = "1"
+    Else
+        Select Case lista_prop(Index).Text
+            Case "Falso"
+                lista_prop(Index).Text = "True"
+            Case "Verdadero"
+                lista_prop(Index).Text = "False"
+            Case "Blink"
+                lista_prop(Index).Text = "Normal"
+            Case "Normal"
+                lista_prop(Index).Text = "Blink"
+            Case "WS1"
+                lista_prop(Index).Text = "W1"
+            Case "W1"
+                lista_prop(Index).Text = "FPS"
+            Case "FPS"
+                lista_prop(Index).Text = "WS1"
+            Case "False"
+                lista_prop(Index).Text = "True"
+            Case "True"
+                lista_prop(Index).Text = "False"
+        
+        End Select
+    
+    End If
+
+End Sub
+
+'*******************************************************************************************************************
+'************************************** Herramientas de edicion de campo  ******************************************
+'*******************************************************************************************************************
+
+Private Sub lista_prop_GotFocus(Index As Integer)
+    lista_prop(Index).BorderStyle = 1
+    
+    If lista_prop(Index).Caption = "X" Then lista_prop(Index).ud_visible = True
+    
+    If lista_prop(Index).Caption = "Y" Then lista_prop(Index).ud_visible = True
+    
+    If lista_prop(Index).Caption = "Gain exp" Then lista_prop(Index).ud_visible = True
+    
+    If lista_prop(Index).Caption = "Editable" Then
+        lista_prop(Index).ud_visible = True
+        lista_prop(Index).Locked = True
+    End If
+    If lista_prop(Index).Caption = "Items" Then
+        lista_prop(Index).ud_visible = True
+        lista_prop(Index).Locked = True
+    End If
+    If lista_prop(Index).Caption = "atributos" Then
+        lista_prop(Index).ud_visible = True
+        lista_prop(Index).Locked = True
+    End If
+    If lista_prop(Index).Caption = "Modo" Then
+        lista_prop(Index).ud_visible = True
+        lista_prop(Index).Locked = True
+    End If
+    If lista_prop(Index).Caption = "LRA" Then
+        lista_prop(Index).Locked = True
+    End If
+    foco = Index
+End Sub
+
+'*******************************************************************************************************************
+'*********************************** desplazamiento en la ventana de propiedades  **********************************
+'*******************************************************************************************************************
+Private Sub lista_prop_KeyDown(Index As Integer, KeyCode As Integer, Shift As Integer)
+    Dim j As Byte
+    If (Index > 0) And (Index < 24) Then
+        If (KeyCode = 13) Then
+            If Index <> max_foco Then
+                lista_prop((Index + 1)).SetFocus
+                foco = Index + 1
+             Else
+                lista_prop(1).SetFocus
+                foco = 1
+            End If
+        End If
+        
+        If KeyCode = 40 Then
+            If Index <> max_foco Then
+                lista_prop((Index + 1)).SetFocus
+                foco = Index + 1
+             Else
+                lista_prop(1).SetFocus
+                foco = 1
+             End If
+        End If
+        
+        If KeyCode = 38 Then
+            If Index <> 1 Then
+                lista_prop((Index - 1)).SetFocus
+                foco = Index - 1
+            Else
+                lista_prop(max_foco).SetFocus
+                foco = max_foco
+            End If
+        End If
+    End If
+End Sub
+'**************************************************************************************************************
+'********************************** ACTUALIZA LAS PROPIEDADES EN LA COLLECTION ********************************
+'**************************************************************************************************************
+Private Sub lista_prop_LostFocus(Index As Integer)
+    Dim aux As String
+    Dim aux2 As String
+    lista_prop(Index).BorderStyle = 0
+        If flag_cambio = cambio Then
+            If lista_prop(Index).Text <> "" Then
+                Select Case lista_prop(Index).Caption
+                    Case "X"
+                        If Val(lista_prop(Index).Text) > 20 Then lista_prop(Index).Text = "20"
+                        If lista_prop(Index).Text <> "" Then lista_prop(Index).Text = "1"
+                        ventana_actual.lb_control(indice_control).cl_campo.x_pos = lista_prop(Index).Text
+                        ventana_actual.lb_control(indice_control).Left = (ventana_actual.lb_control(indice_control).cl_campo.x_pos)
+                    
+                    Case "Y"
+                        If lista_prop(Index).Text = "" Then lista_prop(Index).Text = "1"
+                        If Val(lista_prop(Index).Text) > 4 Then lista_prop(Index).Text = "4"
+                        ventana_actual.lb_control(indice_control).cl_campo.y_pos = lista_prop(Index).Text
+                        ventana_actual.lb_control(indice_control).Top = (lista_prop(Index).Text - 1)
+                    
+                    Case "atributos"
+                            If lista_prop(Index).Text = "Blink" Then
+                                aux2 = "01"
+                            Else
+                                aux2 = "00"
+                            End If
+                            ventana_actual.lb_control(indice_control).cl_campo.atributo = aux2
+                    
+                    Case "Texto"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto = lista_prop(Index).Text
+                        ventana_actual.lb_control(indice_control).Caption = ventana_actual.lb_control(indice_control).cl_campo.texto
+                        ventana_actual.lb_control(indice_control).Width = Len(ventana_actual.lb_control(indice_control).cl_campo.texto)
+                    
+                    Case "JMP"
+                        ventana_actual.lb_control(indice_control).cl_campo.jmp = Val("&H" + lista_prop(Index).Text)
+                    
+                    Case "Dec"
+                        ventana_actual.lb_control(indice_control).cl_campo.dec = lista_prop(Index).Text
+                        ventana_actual.lb_control(indice_control).Caption = ventana_actual.lb_control(indice_control).cl_campo.texto
+                        ventana_actual.lb_control(indice_control).Width = Len(ventana_actual.lb_control(indice_control).cl_campo.texto)
+                    Case "Modo"
+                        ventana_actual.lb_control(indice_control).cl_campo.modo = lista_prop(Index).Text
+                    
+                    Case "Rangox0"
+                        ventana_actual.lb_control(indice_control).cl_campo.rangoX(0) = Val(lista_prop(Index).Text)
+                    Case "Rangox1"
+                        ventana_actual.lb_control(indice_control).cl_campo.rangoX(1) = Val(lista_prop(Index).Text)
+    
+                    Case "Gain exp"
+                        ventana_actual.lb_control(indice_control).cl_campo.recta = lista_prop(Index).Text
+                        
+                    Case "Gain"
+                        ventana_actual.lb_control(indice_control).cl_campo.gain = lista_prop(Index).Text
+                        
+                    Case "Offset"
+                        ventana_actual.lb_control(indice_control).cl_campo.offset = lista_prop(Index).Text
+                        
+                    Case "Max"
+                        ventana_actual.lb_control(indice_control).cl_campo.maximo = Val(lista_prop(Index).Text)
+                        
+                    Case "Min"
+                        ventana_actual.lb_control(indice_control).cl_campo.minimo = Val(lista_prop(Index).Text)
+                    
+                    Case "LRA"
+                        ventana_actual.lb_control(indice_control).cl_campo.LRA = lista_prop(Index).Text
+                    
+                    Case "Editable"
+                        ventana_actual.lb_control(indice_control).cl_campo.Edit = lista_prop(Index).Text
+                    Case "Rangoy0"
+                        ventana_actual.lb_control(indice_control).cl_campo.rangoY(0) = Val(lista_prop(Index).Text)
+                    Case "Rangoy1"
+                        ventana_actual.lb_control(indice_control).cl_campo.rangoY(1) = Val(lista_prop(Index).Text)
+                    Case "Len"
+                        ventana_actual.lb_control(indice_control).cl_campo.largo = Val(lista_prop(Index).Text)
+                        If ventana_actual.lb_control(indice_control).cl_campo.tipo_campo <> "MTDIGITAL" Then
+                            ventana_actual.lb_control(indice_control).Caption = ventana_actual.lb_control(indice_control).cl_campo.texto
+                        Else
+                            ventana_actual.lb_control(indice_control).Caption = ventana_actual.lb_control(indice_control).cl_campo.texto(1)
+                        End If
+                        ventana_actual.lb_control(indice_control).Width = ventana_actual.lb_control(indice_control).cl_campo.largo
+                        
+                    Case "Items"
+                        ventana_actual.lb_control(indice_control).cl_campo.items = Val(lista_prop(Index).Text)
+                    Case "Texto1"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(0) = lista_prop(Index).Text
+                    Case "Texto2"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(1) = lista_prop(Index).Text
+                    Case "Texto3"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(2) = lista_prop(Index).Text
+                    Case "Texto4"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(3) = lista_prop(Index).Text
+                    Case "Texto5"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(4) = lista_prop(Index).Text
+                    Case "Texto6"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(5) = lista_prop(Index).Text
+                    Case "Texto7"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(6) = lista_prop(Index).Text
+                    Case "Texto8"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(7) = lista_prop(Index).Text
+                    Case "Texto9"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(8) = lista_prop(Index).Text
+                    Case "Texto10"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(9) = lista_prop(Index).Text
+                    Case "Texto11"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(10) = lista_prop(Index).Text
+                    Case "Texto12"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(11) = lista_prop(Index).Text
+                    Case "Texto13"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(12) = lista_prop(Index).Text
+                    Case "Texto14"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(13) = lista_prop(Index).Text
+                    Case "Texto15"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(14) = lista_prop(Index).Text
+                    Case "Texto16"
+                        ventana_actual.lb_control(indice_control).cl_campo.texto(15) = lista_prop(Index).Text
+                    Case "Nombre"
+                        ventana_actual.lb_control(indice_control).cl_campo.name = lista_prop(Index).Text
+                End Select
+            End If
+            'ventana_actual.lb_control_Click (indice_control)
+            Dim temp
+            temp = cargar(indice_control, ventana_actual)
+            lista_prop(foco).SetFocus
+            ventana_actual.PropertyMOD
+            flag_cambio = sin_cambio
+        End If
+    lista_prop(Index).ud_visible = False
+End Sub
+
+Private Sub lista_prop_UpClick(Index As Integer)
+    If lista_prop(Index).Caption = "X" Or lista_prop(Index).Caption = "Y" Or lista_prop(Index).Caption = "Items" Then
+        lista_prop(Index).Text = Str(Val(lista_prop(Index).Text) + 1)
+        If lista_prop(Index).Caption = "X" And Val(lista_prop(Index).Text) > 20 Then lista_prop(Index).Text = "20"
+        If lista_prop(Index).Caption = "Y" And Val(lista_prop(Index).Text) > 4 Then lista_prop(Index).Text = "4"
+        If lista_prop(Index).Caption = "MT_Items" And Val(lista_prop(Index).Text) > 16 Then lista_prop(Index).Text = "16"
+    Else
+        Select Case lista_prop(Index).Text
+            Case "Falso"
+                lista_prop(Index).Text = "True"
+            Case "Verdadero"
+                lista_prop(Index).Text = "False"
+            Case "Blink"
+                lista_prop(Index).Text = "Normal"
+            Case "Normal"
+                lista_prop(Index).Text = "Blink"
+            Case "Ws1"
+                lista_prop(Index).Text = "FPS"
+            Case "W1"
+                lista_prop(Index).Text = "Ws1"
+            Case "FPS"
+                lista_prop(Index).Text = "W1"
+            Case "False"
+                lista_prop(Index).Text = "True"
+            Case "True"
+                lista_prop(Index).Text = "False"
+        End Select
+    End If
+End Sub
+
+Private Sub Form_Load()
+    Me.Left = EditorIDE.ScaleWidth - Me.Width
+End Sub
+Public Function cargar(ByVal Index As Integer, VENTANA As pantalla) As Boolean
+        Dim i As Byte
+        Dim aux As String
+        Set ventana_actual = VENTANA
+        Set ptr_control = VENTANA.lb_control(Index)
+       
+        If lista_prop(0).Tag = "" Then
+            For i = 1 To 24
+                Load lista_prop(i)
+                lista_prop(i).Top = (i * 240) + (15 * i)
+            Next i
+            lista_prop(0).Tag = "m"
+        End If
+        
+        clear_propiedades
+        
+        flag_cambio = sin_cambio
+        properties.Caption = ventana_actual.lb_control(Index).Tag
+        
+        aux = ptr_control.cl_campo.tipo_campo
+        lista_prop(1).Visible = True
+        lista_prop(1).Caption = "Nombre"
+        lista_prop(1).Text = ptr_control.cl_campo.name
+        
+        lista_prop(2).Visible = True
+        lista_prop(2).Caption = "atributos"
+        If ptr_control.cl_campo.atributo = "00" Then
+            lista_prop(2).Text = "Normal"
+        Else
+            lista_prop(2).Text = "Blink"
+        End If
+        lista_prop(3).Visible = True
+        lista_prop(3).Caption = "X"
+        lista_prop(3).Text = ptr_control.cl_campo.x_pos
+        lista_prop(3).Numerico = True
+        
+        lista_prop(4).Visible = True
+        lista_prop(4).Caption = "Y"
+        lista_prop(4).Text = ptr_control.cl_campo.y_pos
+        lista_prop(4).Numerico = True
+        
+        Select Case ptr_control.cl_campo.tipo_campo
+            Case "CTEXT"
+                lista_prop(5).Visible = True
+                lista_prop(5).Caption = "Texto"
+                lista_prop(5).Text = ptr_control.cl_campo.texto
+                max_foco = 5
+            Case "MTEXT"
+                lista_prop(5).Visible = True
+                lista_prop(5).Caption = "Texto"
+                lista_prop(5).Text = ptr_control.cl_campo.texto
+                
+                lista_prop(6).Visible = True
+                lista_prop(6).Caption = "JMP"
+                lista_prop(6).Text = Hex(ptr_control.cl_campo.jmp)
+                max_foco = 6
+            Case "NUMERICO"
+                lista_prop(5).Visible = True
+                lista_prop(5).Caption = "Dec"
+                lista_prop(5).Text = ptr_control.cl_campo.dec
+                lista_prop(5).Numerico = True
+                lista_prop(6).Limite_inf = 0
+                lista_prop(6).Limite_Sup = 4
+                
+                lista_prop(6).Visible = True
+                lista_prop(6).Caption = "Len"
+                lista_prop(6).Text = ptr_control.cl_campo.largo
+                lista_prop(6).Numerico = True
+                                        
+                lista_prop(7).Visible = True
+                lista_prop(7).Caption = "Modo"
+                lista_prop(7).Text = ptr_control.cl_campo.modo
+                
+                lista_prop(15).Visible = True
+                lista_prop(15).Caption = "Rangoy0"
+                lista_prop(15).Text = ptr_control.cl_campo.rangoY(0)
+                lista_prop(15).Numerico = True
+                
+                lista_prop(9).Visible = True
+                lista_prop(9).Caption = "Gain exp"
+                lista_prop(9).Text = ptr_control.cl_campo.recta
+                lista_prop(9).Numerico = True
+                
+                lista_prop(10).Visible = True
+                lista_prop(10).Caption = "Gain"
+                lista_prop(10).Text = ptr_control.cl_campo.gain
+                lista_prop(10).Numerico = True
+                
+                lista_prop(11).Visible = True
+                lista_prop(11).Caption = "Offset"
+                lista_prop(11).Text = ptr_control.cl_campo.offset
+                lista_prop(11).Numerico = True
+                
+                lista_prop(12).Visible = True
+                lista_prop(12).Caption = "Max"
+                lista_prop(12).Text = ptr_control.cl_campo.maximo
+                lista_prop(12).Numerico = True
+                lista_prop(12).Limite_inf = 0
+                
+                lista_prop(13).Visible = True
+                lista_prop(13).Caption = "Min"
+                lista_prop(13).Text = ptr_control.cl_campo.minimo
+                lista_prop(13).Numerico = True
+                lista_prop(13).Limite_Sup = 0
+                
+                lista_prop(14).Visible = True
+                lista_prop(14).Caption = "LRA"
+                lista_prop(14).Text = ptr_control.cl_campo.LRA
+                
+                lista_prop(8).Visible = True
+                lista_prop(8).Caption = "Editable"
+                lista_prop(8).Text = ptr_control.cl_campo.Edit
+                
+                lista_prop(16).Visible = True
+                lista_prop(16).Caption = "Rangoy1"
+                lista_prop(16).Text = ptr_control.cl_campo.rangoY(1)
+                lista_prop(16).Numerico = True
+                                       
+                lista_prop(17).Visible = True
+                lista_prop(17).Caption = "Rangox0"
+                lista_prop(17).Text = ptr_control.cl_campo.rangoX(0)
+                lista_prop(17).Numerico = True
+                
+                lista_prop(18).Visible = True
+                lista_prop(18).Caption = "Rangox1"
+                lista_prop(18).Text = ptr_control.cl_campo.rangoX(1)
+                lista_prop(18).Numerico = True
+                max_foco = 18
+            Case "MTDIGITAL"
+                lista_prop(5).Visible = True
+                lista_prop(5).Caption = "LRA"
+                lista_prop(5).Text = ptr_control.cl_campo.LRA
+                
+                lista_prop(6).Visible = True
+                lista_prop(6).Caption = "Len"
+                lista_prop(6).Text = ptr_control.cl_campo.largo
+                lista_prop(6).Numerico = True
+                lista_prop(6).Limite_Sup = 20
+                lista_prop(6).Limite_inf = 1
+                
+                lista_prop(7).Visible = True
+                lista_prop(7).Caption = "Items"
+                lista_prop(7).Text = ptr_control.cl_campo.items
+                
+                lista_prop(8).Visible = True
+                lista_prop(8).Caption = "Editable"
+                lista_prop(8).Text = ptr_control.cl_campo.Edit
+                
+                lista_prop(9).Visible = True
+                lista_prop(9).Caption = "Texto1"
+                lista_prop(9).Text = ptr_control.cl_campo.texto(0)
+                max_foco = 9
+                
+                If ptr_control.cl_campo.items > 1 Then
+                    lista_prop(10).Visible = True
+                    max_foco = 10
+                End If
+                lista_prop(10).Caption = "Texto2"
+                lista_prop(10).Text = ptr_control.cl_campo.texto(1)
+                
+                If ptr_control.cl_campo.items > 2 Then
+                    lista_prop(11).Visible = True
+                    max_foco = 11
+                End If
+                lista_prop(11).Caption = "Texto3"
+                lista_prop(11).Text = ptr_control.cl_campo.texto(2)
+                
+                If ptr_control.cl_campo.items > 3 Then
+                    lista_prop(12).Visible = True
+                    max_foco = 12
+                End If
+                lista_prop(12).Caption = "Texto4"
+                lista_prop(12).Text = ptr_control.cl_campo.texto(3)
+                
+                If ptr_control.cl_campo.items > 4 Then
+                    lista_prop(13).Visible = True
+                    max_foco = 13
+                End If
+                lista_prop(13).Caption = "Texto5"
+                lista_prop(13).Text = ptr_control.cl_campo.texto(4)
+                
+                If ptr_control.cl_campo.items > 5 Then
+                    lista_prop(14).Visible = True
+                    max_foco = 14
+                End If
+                lista_prop(14).Caption = "Texto6"
+                lista_prop(14).Text = ptr_control.cl_campo.texto(5)
+                
+                If ptr_control.cl_campo.items > 6 Then
+                    lista_prop(15).Visible = True
+                    max_foco = 15
+                End If
+                lista_prop(15).Caption = "Texto7"
+                lista_prop(15).Text = ptr_control.cl_campo.texto(6)
+                
+                If ptr_control.cl_campo.items > 7 Then
+                    lista_prop(16).Visible = True
+                    max_foco = 16
+                End If
+                lista_prop(16).Caption = "Texto8"
+                lista_prop(16).Text = ptr_control.cl_campo.texto(7)
+                
+                If ptr_control.cl_campo.items > 8 Then
+                    lista_prop(17).Visible = True
+                    max_foco = 17
+                End If
+                lista_prop(17).Caption = "Texto9"
+                lista_prop(17).Text = ptr_control.cl_campo.texto(8)
+                
+                If ptr_control.cl_campo.items > 9 Then
+                    lista_prop(18).Visible = True
+                    max_foco = 18
+                End If
+                lista_prop(18).Caption = "Texto10"
+                lista_prop(18).Text = ptr_control.cl_campo.texto(9)
+                
+                If ptr_control.cl_campo.items > 10 Then
+                    lista_prop(19).Visible = True
+                    max_foco = 19
+                End If
+                lista_prop(19).Caption = "Texto11"
+                lista_prop(19).Text = ptr_control.cl_campo.texto(10)
+                
+                If ptr_control.cl_campo.items > 11 Then
+                    lista_prop(20).Visible = True
+                    max_foco = 20
+                End If
+                lista_prop(20).Caption = "Texto12"
+                lista_prop(20).Text = ptr_control.cl_campo.texto(11)
+                
+                If ptr_control.cl_campo.items > 12 Then
+                    lista_prop(21).Visible = True
+                    max_foco = 21
+                End If
+                lista_prop(21).Caption = "Texto13"
+                lista_prop(21).Text = ptr_control.cl_campo.texto(12)
+                
+                If ptr_control.cl_campo.items > 13 Then
+                    lista_prop(22).Visible = True
+                    max_foco = 22
+                End If
+                lista_prop(22).Caption = "Texto14"
+                lista_prop(22).Text = ptr_control.cl_campo.texto(13)
+                
+                If ptr_control.cl_campo.items > 14 Then
+                    lista_prop(23).Visible = True
+                    max_foco = 23
+                End If
+                lista_prop(23).Caption = "Texto15"
+                lista_prop(23).Text = ptr_control.cl_campo.texto(14)
+                
+                If ptr_control.cl_campo.items > 15 Then
+                    lista_prop(24).Visible = True
+                    max_foco = 24
+                End If
+                lista_prop(24).Caption = "Texto16"
+                lista_prop(24).Text = ptr_control.cl_campo.texto(15)
+            Case "ALFANUM"
+                lista_prop(5).Visible = True
+                lista_prop(5).Caption = "LRA"
+                lista_prop(5).Text = ptr_control.cl_campo.LRA
+                lista_prop(5).Visible = True
+                lista_prop(5).Caption = "Len"
+                lista_prop(5).Text = ptr_control.cl_campo.largo
+                lista_prop(6).Visible = True
+                lista_prop(6).Caption = "Editable"
+                lista_prop(6).Text = ptr_control.cl_campo.Edit
+                lista_prop(7).Visible = True
+                lista_prop(7).Caption = "LRA"
+                lista_prop(7).Text = ptr_control.cl_campo.LRA
+                max_foco = 7
+        End Select
+    flag_cambio = sin_cambio
+    indice_control = Index
+End Function
+
+Public Function clear_propiedades()
+    Dim j As Byte
+    Dim a As Byte
+    a = properties.count
+    properties.Caption = "Propiedades"
+    If a > 5 Then
+        For j = 1 To 24
+            lista_prop(j).Visible = False
+            lista_prop(j).Locked = False
+            lista_prop(j).Numerico = False
+            lista_prop(j).Limite_inf = -9999
+            lista_prop(j).Limite_Sup = 9999
+        Next j
+    End If
+End Function

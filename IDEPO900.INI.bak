@@ -1,0 +1,13 @@
+[PORTS]
+COMM=3,38400
+
+[OPCIONES]
+DEMO=NO
+
+[SISTEMA]
+COMPILADOR=D:\john\proyecto\Editor\CpOpm1.exe
+OUTPUT_BIN=BIN\
+BINARIO=Pcode.bin       
+SIMULADOR=D:\john\proyecto\Editor\sim.bat
+
+
